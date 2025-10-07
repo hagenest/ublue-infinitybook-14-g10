@@ -7,7 +7,7 @@ dnf update -y
 # install latest vanilla kernel
 
 dnf -y copr enable @kernel-vanilla/stable
-dnf upgrade 'kernel*'
+dnf -y upgrade 'kernel*'
 dnf -y copr disable @kernel-vanilla/stable
 
 # set kernel parameters to fix keyboard after suspend
