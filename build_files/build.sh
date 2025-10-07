@@ -12,9 +12,7 @@ dnf -y copr disable @kernel-vanilla/stable
 
 # set kernel parameters to fix keyboard after suspend
 
-dnf install -y grubby
-
-grubby --update-kernel=ALL --args="i8042.reset i8042.nomux i8042.nopnp i8042.noloop"
+rpm-ostree kargs --append-if-missing="i8042.reset i8042.nomux i8042.nopnp i8042.noloop"
 
 # install tuxedo control center
 
