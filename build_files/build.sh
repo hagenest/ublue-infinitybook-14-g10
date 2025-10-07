@@ -2,7 +2,7 @@
 
 set -ouex pipefail
 
-dnf update
+dnf update -y
 
 # install latest vanilla kernel
 
@@ -20,7 +20,7 @@ rpm --import 0x54840598.pub.asc
 
 mv tuxedo.repo /etc/yum.repos.d/tuxedo.repo
 
-dnf install tuxedo-control-center
+dnf install -y tuxedo-control-center
 
 # install ethernet driver
 
