@@ -11,8 +11,9 @@ dnf -y upgrade 'kernel*'
 dnf -y copr disable @kernel-vanilla/stable
 
 # set kernel parameters to fix keyboard after suspend
+# currently disabled, seems that this has to happen on the machine itself. looking into a nice solution
 
-rpm-ostree kargs --append-if-missing="i8042.reset i8042.nomux i8042.nopnp i8042.noloop"
+#rpm-ostree kargs --append-if-missing="i8042.reset i8042.nomux i8042.nopnp i8042.noloop"
 
 # install tuxedo control center
 
