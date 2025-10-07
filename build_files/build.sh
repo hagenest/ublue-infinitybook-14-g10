@@ -2,23 +2,26 @@
 
 set -ouex pipefail
 
-### Install packages
+dnf update
 
-# Packages can be installed from any enabled yum repo on the image.
-# RPMfusion repos are available by default in ublue main images
-# List of rpmfusion packages can be found here:
-# https://mirrors.rpmfusion.org/mirrorlist?path=free/fedora/updates/39/x86_64/repoview/index.html&protocol=https&redirect=1
+# install latest vanilla kernel
 
-# this installs a package from fedora repos
-dnf5 install -y tmux 
+dnf -y copr enable @kernel-vanilla/stable
+dnf upgrade 'kernel*'
+dnf -y copr disable @kernel-vanilla/stable
 
-# Use a COPR Example:
-#
-# dnf5 -y copr enable ublue-os/staging
-# dnf5 -y install package
-# Disable COPRs so they don't end up enabled on the final image:
-# dnf5 -y copr disable ublue-os/staging
+# set kernel parameters to fix keyboard after suspend
 
-#### Example for enabling a System Unit File
+grubby --update-kernel=ALL --args="i8042.reset i8042.nomux i8042.nopnp i8042.noloop"
 
-systemctl enable podman.socket
+# install tuxedo control center
+
+rpm --import 0x54840598.pub.asc
+
+mv tuxedo.repo /etc/yum.repos.d/tuxedo.repo
+
+dnf install tuxedo-control-center
+
+# install ethernet driver
+
+rpm install -y tuxedo-yt6801-1.0.28-1.noarch.rpm
